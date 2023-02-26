@@ -20,6 +20,7 @@ const tagSection = document.querySelector('.tags');
 const searchInputName = document.getElementById('search-input-name');
 const searchButtonName = document.getElementById('search-button-name');
 const favoriteButton = document.getElementById('favoriteButton');
+const favoriteButtonCard = document.getElementById('favoriteButtonCard');
 const clearTagAndNameButton = document.getElementById('clearTagAndName');
 const toggleHomeFaveButton = document.getElementById('toggleHomeFave');
 const heart = document.getElementById('heart');
@@ -62,9 +63,14 @@ clearTagAndNameButton.addEventListener('click', () => clearTagAndName())
 
 recipeSection.addEventListener('click', (event) => {
   if(event.target.id !== 'recipes-section') {
-    selectedRecipe = recipeRepository.getRecipeByID(event.target.dataset.recipeid);
-    toggleFavorite();
-    updateModal(selectedRecipe);
+    if(['favoriteButtonCard', 'favoriteButtonCardSpan'].includes(event.target.id)){
+      console.log('fav')
+    }else {
+      console.log('fav2')
+      selectedRecipe = recipeRepository.getRecipeByID(event.target.dataset.recipeid);
+      toggleFavorite();
+      updateModal(selectedRecipe);
+    }
   }
 });
 
@@ -164,14 +170,17 @@ const refreshRecipes = () => {
 
   currentRecipes.forEach(recipe => {
     recipeSection.innerHTML += `
-    <figure role="button" tabindex='0' data-recipeid="${recipe.id}" data-custom-open="modal-1" class="recipeCard">
-      <img class="ignore-pointer-event" src="${recipe.image}" alt="picture of ${recipe.name}">
-      <figcaption class="ignore-pointer-event">
-        <h2 class="recipe-tag">${recipe.tags[0]}</h2>
-        <h2 aria-hidden="true" class= "recipe-title">${recipe.name}</h2>
-        <div class="time"><span class="material-symbols-outlined timer">timer</span><p>${recipe.getIngredientTime()}</p></div>
-      </figcaption>
-    </figure>`;
+      <figure role="button" tabindex='0' data-recipeid="${recipe.id}" data-custom-open="modal-1" class="recipeCard">
+        <img class="ignore-pointer-event" src="${recipe.image}" alt="picture of ${recipe.name}">
+        <figcaption class="ignore-pointer-event">
+          <h2 class="recipe-tag">${recipe.tags[0]}</h2>
+          <h2 aria-hidden="true" class= "recipe-title">${recipe.name}</h2>
+        </figcaption>
+          <div class="time"><span class="material-symbols-outlined timer">timer</span><p>${recipe.getIngredientTime()}</p></div>
+          <button aria-label="add recipe to favorites" id="favoriteButtonCard" class="favorite-button-card">
+            <span id="favoriteButtonCardSpan" class="material-symbols-outlined">favorite</span>
+          </button>
+      </figure>`;
   });
 
   MicroModal.init({

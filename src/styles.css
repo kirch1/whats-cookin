@@ -28,6 +28,16 @@ body {
   font-size: small;
 }
 
+.favorite-button-card{
+  display: flex;
+  align-items: center;
+  color: #AC0C0C;
+  font-size: large;
+  position: absolute;
+  bottom:18px;
+  right:15px;
+}
+
 header {
   display: flex;
   flex-shrink: 0;
@@ -211,6 +221,12 @@ input, select {
 
 select {
   height: 35px;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .full-heart {
